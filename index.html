@@ -180,5 +180,32 @@
 	<!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
+
+<script>
+// Ensure our text changes persist after Framer hydration
+(function() {
+  function applyChanges() {
+    // Fix page title if reverted by Framer
+    if (document.title === 'Carvatrix' || document.title.includes('Carvatrix')) {
+      document.title = 'Eko Luxury Rides';
+    }
+  }
+  
+  // Run after hydration
+  if (document.readyState === 'complete') {
+    applyChanges();
+  } else {
+    window.addEventListener('load', applyChanges);
+  }
+  
+  // Also run periodically for a few seconds (catches late hydration)
+  var attempts = 0;
+  var interval = setInterval(function() {
+    applyChanges();
+    attempts++;
+    if (attempts > 20) clearInterval(interval);
+  }, 500);
+})();
+</script>
 </body>
 </html>
