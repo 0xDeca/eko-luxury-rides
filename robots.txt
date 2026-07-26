@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://carvatrix.framer.ai/sitemap.xml
+Sitemap: https://eko-luxury-rides.vercel.app/sitemap.xml
