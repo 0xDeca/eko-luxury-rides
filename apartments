@@ -160,5 +160,29 @@
 	<!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
+
+<script>
+(function() {
+  function fixContent() {
+    if (document.title === 'Carvatrix' || (document.title && document.title.includes('Carvatrix'))) {
+      document.title = 'Eko Luxury Rides';
+    }
+    var imgs = document.querySelectorAll('img[alt="company-logo"], img[alt="logo"]');
+    for (var i = 0; i < imgs.length; i++) {
+      var img = imgs[i];
+      if (img.src && (img.src.includes('framerusercontent') || img.src.includes('Carvatrix') || img.src.includes('carvatrix'))) {
+        img.src = 'logo.png';
+      }
+    }
+  }
+  if (document.readyState === 'complete') fixContent();
+  else window.addEventListener('load', fixContent);
+  var n = 0;
+  var iv = setInterval(function() {
+    fixContent(); n++;
+    if (n > 30) clearInterval(iv);
+  }, 400);
+})();
+</script>
 </body>
 </html>
