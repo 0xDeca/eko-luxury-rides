@@ -153,9 +153,9 @@ a[href="cars"] .framer-text { color: rgb(10, 14, 19) !important; }
 .framer-epIvI.framer-v-1nss3ny .framer-1wpehdd .framer-text,
 .framer-epIvI.framer-v-1ijffpn .framer-1wpehdd .framer-text{color:#000!important}
 }
+.framer-epIvI .framer-1n0wu38{display:none!important}
 @media (max-width:809.98px){
 .eko-hamburger-trigger{display:flex!important;position:static!important;margin-left:auto}
-.framer-epIvI.framer-v-1yzjyvu .framer-1n0wu38{display:none!important}
 }
 @media (min-width:810px){
 .eko-hamburger-trigger{display:none!important}
@@ -203,7 +203,9 @@ a[href="cars"] .framer-text { color: rgb(10, 14, 19) !important; }
 </div>
 <script>
 (function(){
-  var nav = document.querySelector('.framer-v-1yzjyvu');
+  var navs = document.querySelectorAll('.framer-v-1yzjyvu');
+  var nav = null;
+  for(var i=0;i<navs.length;i++){if(navs[i].offsetParent!==null){nav=navs[i];break}}
   if(!nav) return;
   var container = nav.querySelector('.framer-1yc6787') || nav;
   var toggle = document.createElement('button');
