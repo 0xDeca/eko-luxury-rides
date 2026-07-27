@@ -154,7 +154,7 @@ a[href="cars"] .framer-text { color: rgb(10, 14, 19) !important; }
 .framer-epIvI.framer-v-1ijffpn .framer-1wpehdd .framer-text{color:#000!important}
 }
 @media (max-width:809.98px){
-.eko-hamburger-trigger{display:flex!important;right:10px}
+.eko-hamburger-trigger{display:flex!important;position:static!important;margin-left:auto}
 .framer-epIvI.framer-v-1yzjyvu .framer-1n0wu38{display:none!important}
 }
 @media (min-width:810px){
@@ -205,6 +205,7 @@ a[href="cars"] .framer-text { color: rgb(10, 14, 19) !important; }
 (function(){
   var nav = document.querySelector('.framer-v-1yzjyvu');
   if(!nav) return;
+  var container = nav.querySelector('.framer-1yc6787') || nav;
   var toggle = document.createElement('button');
   toggle.className = 'eko-hamburger-trigger';
   toggle.setAttribute('aria-label','Toggle navigation menu');
@@ -213,7 +214,7 @@ a[href="cars"] .framer-text { color: rgb(10, 14, 19) !important; }
     var span = document.createElement('span');
     toggle.appendChild(span);
   }
-  nav.appendChild(toggle);
+  container.appendChild(toggle);
   var menu = document.getElementById('eko-menu');
   var overlay = document.getElementById('eko-overlay');
   var links = menu.querySelectorAll('a');
