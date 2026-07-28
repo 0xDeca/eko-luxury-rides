@@ -144,6 +144,15 @@
   right: 0;
   z-index: 1000;
   padding: 12px 32px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transform: translateY(0);
+  transition: transform 0.35s ease;
+}
+.eko-header.hidden {
+  transform: translateY(-100%);
 }
 .eko-header-inner {
   max-width: 1400px;
@@ -761,6 +770,21 @@
     if (window.innerWidth >= 1024 && open) closeMenu();
   });
 })();
+
+  // Scroll hide header
+  (function() {
+    var header = document.querySelector('.eko-header');
+    var lastScroll = 0;
+    window.addEventListener('scroll', function() {
+      var current = window.pageYOffset || document.documentElement.scrollTop;
+      if (current > 80 && current > lastScroll) {
+        header.classList.add('hidden');
+      } else {
+        header.classList.remove('hidden');
+      }
+      lastScroll = current;
+    }, { passive: true });
+  })();
 
   // FAQ accordion
   var faqItems = document.querySelectorAll('.eko-faq-question');
