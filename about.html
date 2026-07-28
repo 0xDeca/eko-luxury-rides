@@ -18,62 +18,135 @@
   <link rel="canonical" href="about.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600;700;900&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #1C1917;
+      --secondary: #44403C;
+      --cta: #CA8A04;
+      --gold: #CA8A04;
+      --gold-light: #E4A511;
+      --bg: #FAFAF9;
+      --bg-card: rgba(255,255,255,0.75);
+      --border-glass: rgba(28,25,23,0.08);
+      --text: #0C0A09;
+      --text-muted: #6B6865;
+      --blur-amount: 15px;
+      --morph-duration: 500ms;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; color: #000; background: #fff; overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Jost', sans-serif; color: var(--text); background: var(--bg);
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    }
     img { max-width: 100%; height: auto; display: block; }
 
-    /* ===== HEADER (same as index) ===== */
+    h1, h2, h3, h4, h5, h6 { font-family: 'Bodoni Moda', serif; }
+    p, a, button, li, span, input, textarea { font-family: 'Jost', sans-serif; }
+
+    /* ===== GLASS CARD ===== */
+    .glass {
+      background: var(--bg-card);
+      backdrop-filter: blur(var(--blur-amount));
+      -webkit-backdrop-filter: blur(var(--blur-amount));
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      transition: transform var(--morph-duration) cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow var(--morph-duration) ease;
+    }
+    .glass:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(28,25,23,0.08);
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0; transform: translateX(-40px);
+      transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0; transform: translateX(40px);
+      transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .reveal-scale {
+      opacity: 0; transform: scale(0.92);
+      transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    /* ===== HEADER ===== */
     .eko-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       padding: 12px 32px;
+      background: rgba(250,250,249,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(28,25,23,0.06);
     }
     .eko-header-inner {
       max-width: 1400px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between; position: relative;
     }
     .eko-logo { display: flex; align-items: center; text-decoration: none; z-index: 1001; flex-shrink: 0; }
-    .eko-logo img { height: 72px; width: auto; display: block; }
+    .eko-logo img { height: 64px; width: auto; display: block; }
     .eko-nav { position: absolute; left: 50%; transform: translateX(-50%); }
     .eko-nav-list { display: flex; align-items: center; gap: 36px; list-style: none; margin: 0; padding: 0; }
     .eko-nav-list a {
-      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
-      color: #000; text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
-      padding: 4px 0; position: relative; transition: opacity 0.2s;
+      font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500;
+      color: var(--text-muted); text-decoration: none; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 0; position: relative;
+      transition: color 0.3s ease;
     }
     .eko-nav-list a::after {
       content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-      height: 2px; background: #000; transform: scaleX(0); transition: transform 0.25s ease;
+      height: 1.5px; background: var(--gold); transform: scaleX(0);
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .eko-nav-list a:hover::after, .eko-nav-list a.active::after { transform: scaleX(1); }
-    .eko-nav-list a:hover { opacity: 0.7; }
-    .eko-nav-list a.active { font-weight: 700; }
-    .eko-nav-list a.active::after { transform: scaleX(1); }
+    .eko-nav-list a:hover, .eko-nav-list a.active { color: var(--text); }
 
     .eko-hamburger {
       display: none; flex-direction: column; justify-content: center; align-items: center;
       width: 36px; height: 36px; background: none; border: none; cursor: pointer;
       z-index: 1001; padding: 0; gap: 5px;
     }
-    .eko-hamburger span { display: block; width: 24px; height: 2px; background: #000; border-radius: 1px; transition: transform 0.3s ease, opacity 0.3s ease; transform-origin: center; }
+    .eko-hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 1px; transition: transform 0.3s ease, opacity 0.3s ease; transform-origin: center; }
     .eko-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .eko-hamburger.active span:nth-child(2) { opacity: 0; }
     .eko-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     .eko-mobile-menu {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #fff;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(250,250,249,0.97);
+      backdrop-filter: blur(20px);
       z-index: 999; visibility: hidden; transform: translateY(-100%);
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0.35s; padding-top: 80px;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.4s;
+      padding-top: 80px;
     }
     .eko-mobile-menu.active { visibility: visible; transform: translateY(0); }
     .eko-mobile-menu ul { list-style: none; margin: 0; padding: 16px 24px 24px; }
     .eko-mobile-menu li { padding: 0; }
     .eko-mobile-menu a {
-      display: block; padding: 16px 0; font-family: 'Inter', sans-serif; font-size: 18px;
-      font-weight: 500; color: #000; text-decoration: none; border-bottom: 1px solid #eee;
+      display: block; padding: 16px 0;
+      font-family: 'Jost', sans-serif; font-size: 18px; font-weight: 500;
+      color: var(--text); text-decoration: none; border-bottom: 1px solid rgba(28,25,23,0.08);
     }
-    .eko-mobile-menu a:hover { opacity: 0.6; }
 
     @media (max-width: 1023.98px) {
       .eko-header { padding: 12px 20px; }
@@ -85,147 +158,252 @@
       .eko-hamburger { display: none !important; }
     }
 
-    /* ===== SECTION STYLES ===== */
-    .section-title {
-      font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 400;
-      text-align: center; margin: 0 0 48px; color: #000;
-    }
-    .section-title strong { font-weight: 700; }
+    /* ===== SECTION UTILITIES ===== */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .section-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 42px; font-weight: 400;
+      text-align: center; margin: 0 0 12px; color: var(--text);
+      line-height: 1.2;
+    }
+    .section-title strong { font-weight: 700; color: var(--gold); }
+    .section-sub {
+      font-family: 'Jost', sans-serif;
+      font-size: 16px; text-align: center;
+      color: var(--text-muted); margin: 0 0 52px;
+      letter-spacing: 0.3px;
+    }
 
     /* ===== ABOUT HERO ===== */
     .about-hero {
-      padding: 160px 24px 80px; background: #f9f9fa;
+      padding: 160px 24px 100px;
+      background: linear-gradient(180deg, #FAFAF9 0%, #F5F4F2 100%);
+      position: relative; overflow: hidden;
     }
-    .about-hero .container { display: flex; align-items: center; gap: 60px; }
+    .about-hero::before {
+      content: ''; position: absolute; top: -50%; right: -20%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(202,138,4,0.06) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .about-hero .container { display: flex; align-items: center; gap: 60px; position: relative; z-index: 1; }
     .about-hero-content { flex: 1; }
     .about-hero-content h1 {
-      font-size: 48px; font-weight: 400; margin: 0 0 12px; line-height: 1.2;
+      font-size: 52px; font-weight: 400; margin: 0 0 16px; line-height: 1.15;
     }
-    .about-hero-content h1 strong { font-weight: 900; }
+    .about-hero-content h1 strong { font-weight: 700; }
     .about-hero-content p {
-      font-size: 18px; color: #555; line-height: 1.6; max-width: 480px;
+      font-size: 18px; color: var(--text-muted); line-height: 1.6; max-width: 480px;
+      font-family: 'Jost', sans-serif; letter-spacing: 0.2px;
     }
-    .about-hero-image { flex: 1; border-radius: 12px; overflow: hidden; }
-    .about-hero-image img { width: 100%; height: auto; border-radius: 12px; }
+    .about-hero-img { flex: 1; border-radius: 16px; overflow: hidden; }
+    .about-hero-img img { width: 100%; height: auto; border-radius: 16px; }
 
     /* ===== OUR STORY ===== */
-    .our-story { padding: 80px 24px; background: #fff; }
-    .our-story .container { display: flex; gap: 60px; align-items: flex-start; }
-    .our-story-text { flex: 1; }
-    .our-story-text h2 { font-size: 36px; font-weight: 400; margin: 0 0 20px; }
-    .our-story-text h2 strong { font-weight: 700; }
-    .our-story-text p { font-size: 16px; line-height: 1.8; color: #555; margin-bottom: 16px; }
-    .our-story-image { flex: 1; }
-    .our-story-image img { width: 100%; border-radius: 12px; }
+    .story { padding: 100px 24px; background: #fff; }
+    .story .container { display: flex; gap: 64px; align-items: center; }
+    .story-text { flex: 1; }
+    .story-text h2 { font-size: 40px; font-weight: 400; margin: 0 0 20px; }
+    .story-text h2 strong { font-weight: 700; color: var(--gold); }
+    .story-text p { font-size: 16px; line-height: 1.8; color: var(--text-muted); margin-bottom: 16px; }
+    .story-img { flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(28,25,23,0.08); }
+    .story-img img { width: 100%; border-radius: 16px; }
 
     /* ===== MISSION & VISION ===== */
-    .mission-vision { padding: 80px 24px; background: #f9f9fa; }
-    .mission-vision .container { display: flex; gap: 60px; align-items: center; }
-    .mv-image { flex: 1; }
-    .mv-image img { width: 100%; border-radius: 12px; }
+    .mv { padding: 100px 24px; background: var(--bg); }
+    .mv .container { display: flex; gap: 64px; align-items: center; }
+    .mv-img { flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(28,25,23,0.08); }
+    .mv-img img { width: 100%; border-radius: 16px; }
     .mv-content { flex: 1; }
-    .mv-item { margin-bottom: 32px; }
+    .mv-item { margin-bottom: 36px; }
     .mv-item:last-child { margin-bottom: 0; }
-    .mv-item h3 { font-size: 24px; font-weight: 700; margin: 0 0 8px; }
-    .mv-item p { font-size: 16px; line-height: 1.7; color: #555; }
+    .mv-item h3 {
+      font-size: 22px; font-weight: 600;
+      color: var(--primary); margin: 0 0 8px;
+      font-family: 'Jost', sans-serif;
+      text-transform: uppercase; letter-spacing: 2px;
+    }
+    .mv-item h3 span { color: var(--gold); }
+    .mv-item p { font-size: 16px; line-height: 1.8; color: var(--text-muted); }
 
-    /* ===== IMPACT NUMBERS ===== */
-    .impact { padding: 80px 24px; background: #0a0e13; }
+    /* ===== IMPACT ===== */
+    .impact { padding: 100px 24px; background: var(--primary); position: relative; overflow: hidden; }
+    .impact::before {
+      content: ''; position: absolute; top: -30%; left: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(202,138,4,0.08) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
     .impact .section-title { color: #fff; }
-    .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-    .impact-card { text-align: center; padding: 32px 16px; }
-    .impact-number { font-size: 48px; font-weight: 900; color: #fff; margin: 0 0 4px; }
-    .impact-label { font-size: 16px; color: #96999c; margin: 0; }
+    .impact .section-title strong { color: var(--gold); }
+    .impact .section-sub { color: rgba(250,250,249,0.6); }
+    .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; z-index: 1; }
+    .impact-card {
+      text-align: center; padding: 40px 16px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .impact-card:hover { transform: translateY(-6px); }
+    .impact-num { font-size: 52px; font-weight: 700; color: var(--gold); margin: 0 0 4px; font-family: 'Bodoni Moda', serif; }
+    .impact-label { font-size: 15px; color: rgba(250,250,249,0.7); margin: 0; font-family: 'Jost', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
     /* ===== JOURNEY ===== */
-    .journey { padding: 80px 24px; background: #fff; }
-    .journey .container { display: flex; gap: 60px; align-items: center; }
-    .journey-content { flex: 1; }
-    .journey-content h2 { font-size: 36px; font-weight: 400; margin: 0 0 32px; }
-    .journey-content h2 strong { font-weight: 700; }
-    .journey-point { display: flex; gap: 12px; margin-bottom: 20px; align-items: flex-start; }
-    .journey-dot { width: 12px; height: 12px; border-radius: 50%; background: #0a0e13; flex-shrink: 0; margin-top: 6px; }
-    .journey-point p { font-size: 15px; line-height: 1.6; color: #555; }
-    .journey-image { flex: 1; }
-    .journey-image img { width: 100%; border-radius: 12px; }
+    .journey { padding: 100px 24px; background: #fff; }
+    .journey .container { display: flex; gap: 64px; align-items: center; }
+    .journey-text { flex: 1; }
+    .journey-text h2 { font-size: 40px; font-weight: 400; margin: 0 0 20px; }
+    .journey-text h2 strong { font-weight: 700; color: var(--gold); }
+    .journey-text > p { font-size: 16px; color: var(--text-muted); margin: 0 0 36px; line-height: 1.7; }
+    .journey-point { display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start; padding: 16px 20px; background: var(--bg); border-radius: 12px; border: 1px solid rgba(28,25,23,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .journey-point:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(28,25,23,0.06); }
+    .journey-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 5px; }
+    .journey-point p { font-size: 15px; line-height: 1.6; color: var(--text-muted); }
+    .journey-img { flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(28,25,23,0.08); }
+    .journey-img img { width: 100%; border-radius: 16px; }
 
     /* ===== VALUES ===== */
-    .values { padding: 80px 24px; background: #f9f9fa; }
+    .values { padding: 100px 24px; background: var(--bg); }
     .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .value-card {
-      background: #fff; border: 1px solid rgba(150,153,156,0.1); border-radius: 12px;
-      padding: 32px 24px; transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 36px 28px; border-radius: 16px;
+      background: var(--bg-card); backdrop-filter: blur(var(--blur-amount));
+      -webkit-backdrop-filter: blur(var(--blur-amount));
+      border: 1px solid var(--border-glass);
+      transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 500ms ease;
     }
-    .value-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+    .value-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(28,25,23,0.08);
+    }
     .value-icon {
-      width: 48px; height: 48px; border-radius: 50%; background: #e2e3e4;
-      display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(202,138,4,0.1);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--gold);
     }
-    .value-card h3 { font-size: 20px; font-weight: 600; margin: 0 0 12px; }
-    .value-card p { font-size: 14px; line-height: 1.7; color: #555; margin: 0; }
+    .value-card h3 { font-size: 20px; font-weight: 600; margin: 0 0 12px; font-family: 'Bodoni Moda', serif; }
+    .value-card p { font-size: 14px; line-height: 1.8; color: var(--text-muted); margin: 0; }
 
     /* ===== TEAM ===== */
-    .team { padding: 80px 24px; background: #fff; }
+    .team { padding: 100px 24px; background: #fff; }
     .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-    .team-card { text-align: center; }
-    .team-card img { width: 100%; border-radius: 12px; margin-bottom: 16px; aspect-ratio: 1; object-fit: cover; }
-    .team-card h4 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
-    .team-card p { font-size: 14px; color: #666; margin: 0; }
+    .team-card {
+      text-align: center; padding: 24px 16px 28px;
+      border-radius: 16px;
+      background: var(--bg-card); backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-glass);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .team-card:hover { transform: translateY(-6px); }
+    .team-card img {
+      width: 120px; height: 120px; border-radius: 50%;
+      object-fit: cover; margin: 0 auto 16px;
+      border: 2px solid rgba(202,138,4,0.2);
+    }
+    .team-card h4 { font-size: 18px; font-weight: 600; margin: 0 0 4px; font-family: 'Bodoni Moda', serif; }
+    .team-card p { font-size: 13px; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; }
 
     /* ===== TESTIMONIALS ===== */
-    .testimonials { padding: 80px 24px; background: #f9f9fa; }
+    .testimonials { padding: 100px 24px; background: var(--bg); }
     .testimonials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
     .testimonial-card {
-      background: #fff; border: 1px solid rgba(150,153,156,0.1); border-radius: 12px; padding: 32px;
+      padding: 36px; border-radius: 16px;
+      background: var(--bg-card); backdrop-filter: blur(var(--blur-amount));
+      -webkit-backdrop-filter: blur(var(--blur-amount));
+      border: 1px solid var(--border-glass);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .testimonial-rating { font-size: 20px; font-weight: 700; color: #e8a317; margin-bottom: 12px; }
-    .testimonial-text { font-size: 15px; line-height: 1.7; color: #333; margin: 0 0 16px; font-style: italic; }
-    .testimonial-name { font-size: 14px; font-weight: 600; color: #000; margin: 0; }
+    .testimonial-card:hover { transform: translateY(-4px); }
+    .testimonial-rating { font-size: 22px; font-weight: 700; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
+    .testimonial-text { font-size: 15px; line-height: 1.8; color: var(--text-muted); margin: 0 0 20px; font-style: italic; }
+    .testimonial-name { font-size: 15px; font-weight: 600; color: var(--text); margin: 0; font-family: 'Bodoni Moda', serif; }
 
     /* ===== FAQ ===== */
-    .faq-section { padding: 80px 24px; background: #fff; }
+    .faq-section { padding: 100px 24px; background: #fff; }
     .faq-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-    .faq-item { border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
-    .faq-question {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 24px; background: #f9f9fa; border: none; cursor: pointer;
-      font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 500; color: #000;
-      text-align: left; transition: background 0.2s;
+    .faq-item {
+      border-radius: 12px; overflow: hidden;
+      background: var(--bg-card); backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-glass);
     }
-    .faq-question:hover { background: #f0f0f1; }
-    .faq-question[aria-expanded="true"] { background: #f0f0f1; }
-    .faq-arrow { flex-shrink: 0; transition: transform 0.3s ease; color: #666; }
-    .faq-question[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
-    .faq-answer.open { max-height: 300px; }
-    .faq-answer p { font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; color: #555; margin: 0; padding: 0 24px 20px; }
+    .faq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 28px; background: transparent; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 500; color: var(--text);
+      text-align: left; transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--gold); }
+    .faq-q[aria-expanded="true"] { color: var(--gold); }
+    .faq-arrow { flex-shrink: 0; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); color: var(--text-muted); }
+    .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); color: var(--gold); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+    .faq-a.open { max-height: 400px; }
+    .faq-a p { font-family: 'Jost', sans-serif; font-size: 15px; line-height: 1.8; color: var(--text-muted); margin: 0; padding: 0 28px 24px; }
 
     /* ===== FOOTER ===== */
     .eko-footer {
-      background: #fff; border-top: 1px solid rgba(150,153,156,0.1); padding: 48px 24px 32px;
+      background: var(--primary); padding: 56px 24px 32px;
+      border-top: 1px solid rgba(250,250,249,0.06);
     }
     .eko-footer-inner { max-width: 1200px; margin: 0 auto; }
-    .eko-footer-main { display: flex; gap: 48px; padding-bottom: 32px; border-bottom: 1px solid #e5e5e5; margin-bottom: 24px; flex-wrap: wrap; }
+    .eko-footer-main { display: flex; gap: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(250,250,249,0.08); margin-bottom: 24px; flex-wrap: wrap; }
     .eko-footer-brand { flex: 2; min-width: 280px; }
-    .eko-footer-brand img { height: 48px; width: auto; margin-bottom: 16px; }
-    .eko-footer-brand p { font-size: 14px; line-height: 1.7; color: #555; max-width: 360px; }
+    .eko-footer-brand img { height: 44px; width: auto; margin-bottom: 16px; }
+    .eko-footer-brand p { font-size: 14px; line-height: 1.7; color: rgba(250,250,249,0.6); max-width: 360px; }
     .eko-footer-col { flex: 1; min-width: 140px; }
-    .eko-footer-col h5 { font-size: 14px; font-weight: 600; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .eko-footer-col a { display: block; font-size: 14px; color: #555; text-decoration: none; padding: 4px 0; transition: color 0.2s; }
-    .eko-footer-col a:hover { color: #000; }
+    .eko-footer-col h5 { font-size: 12px; font-weight: 600; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(250,250,249,0.4); }
+    .eko-footer-col a { display: block; font-size: 14px; color: rgba(250,250,249,0.6); text-decoration: none; padding: 4px 0; transition: color 0.2s; }
+    .eko-footer-col a:hover { color: var(--gold); }
     .eko-footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .eko-footer-bottom p { font-size: 13px; color: #888; }
+    .eko-footer-bottom p { font-size: 13px; color: rgba(250,250,249,0.4); }
+    .eko-footer-bottom strong { color: rgba(250,250,249,0.7); }
     .eko-footer-links { display: flex; gap: 24px; }
-    .eko-footer-links a { font-size: 13px; color: #888; text-decoration: none; transition: color 0.2s; }
-    .eko-footer-links a:hover { color: #000; }
+    .eko-footer-links a { font-size: 13px; color: rgba(250,250,249,0.4); text-decoration: none; transition: color 0.2s; }
+    .eko-footer-links a:hover { color: var(--gold); }
+
+    /* ===== GOLD ACCENT DIVIDER ===== */
+    .gold-line {
+      width: 48px; height: 2px; background: var(--gold);
+      margin: 0 auto 20px; border-radius: 1px;
+    }
+
+    /* ===== CTA BUTTON ===== */
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px;
+      background: var(--gold); color: #fff;
+      border: none; border-radius: 100px;
+      font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 600;
+      text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
+      cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(202,138,4,0.3); }
+    .btn-gold:active { transform: translateY(0); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px;
+      background: transparent; color: var(--text);
+      border: 1.5px solid rgba(28,25,23,0.2); border-radius: 100px;
+      font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500;
+      text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1023px) {
       .about-hero .container { flex-direction: column; text-align: center; }
       .about-hero-content p { max-width: 100%; }
-      .our-story .container { flex-direction: column; }
-      .mission-vision .container { flex-direction: column; }
+      .story .container { flex-direction: column; }
+      .mv .container { flex-direction: column-reverse; }
       .journey .container { flex-direction: column; }
       .impact-grid { grid-template-columns: repeat(2, 1fr); }
       .values-grid { grid-template-columns: 1fr; }
@@ -233,25 +411,29 @@
     }
     @media (max-width: 768px) {
       .about-hero { padding: 120px 20px 60px; }
-      .about-hero-content h1 { font-size: 32px; }
-      .our-story { padding: 60px 20px; }
-      .our-story-text h2 { font-size: 28px; }
-      .mission-vision { padding: 60px 20px; }
+      .about-hero-content h1 { font-size: 34px; }
+      .story { padding: 60px 20px; }
+      .story-text h2 { font-size: 30px; }
+      .mv { padding: 60px 20px; }
       .impact { padding: 60px 20px; }
-      .impact-number { font-size: 36px; }
+      .impact-num { font-size: 38px; }
       .impact-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .journey { padding: 60px 20px; }
-      .journey-content h2 { font-size: 28px; }
+      .journey-text h2 { font-size: 30px; }
       .values { padding: 60px 20px; }
       .testimonials { padding: 60px 20px; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .faq-section { padding: 60px 20px; }
       .team { padding: 60px 20px; }
-      .section-title { font-size: 28px; margin-bottom: 32px; }
+      .section-title { font-size: 30px; }
+      .section-sub { margin-bottom: 36px; }
       .team-grid { grid-template-columns: repeat(2, 1fr); }
-      .eko-footer { padding: 32px 20px 24px; }
+      .eko-footer { padding: 40px 20px 24px; }
       .eko-footer-main { flex-direction: column; gap: 24px; }
       .eko-footer-bottom { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .team-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -287,46 +469,47 @@
     </div>
   </header>
 
-  <!-- ===== ABOUT HERO ===== -->
+  <!-- ===== HERO ===== -->
   <section class="about-hero">
     <div class="container">
-      <div class="about-hero-content">
+      <div class="about-hero-content reveal-left">
         <h1>Explore the world of <strong>Luxury Cars</strong></h1>
         <p>Driven by Passion. Powered by Precision.</p>
       </div>
-      <div class="about-hero-image">
+      <div class="about-hero-img reveal-right">
         <img src="https://framerusercontent.com/images/fIz2Q5GvUbIJrEQYgdAbK9juis.jpg" alt="Luxury car" loading="lazy" />
       </div>
     </div>
   </section>
 
-  <!-- ===== OUR STORY ===== -->
-  <section class="our-story">
+  <!-- ===== STORY ===== -->
+  <section class="story">
     <div class="container">
-      <div class="our-story-text">
+      <div class="story-text reveal-left">
         <h2>Our <strong>Story</strong></h2>
+        <div class="gold-line" style="margin:0 0 20px"></div>
         <p>We started with a simple goal — to make luxury car rentals seamless and accessible. What began as a small fleet of premium vehicles has grown into a trusted name in luxury mobility and serviced accommodation across Nigeria.</p>
         <p>Every vehicle in our collection is hand-selected, meticulously maintained, and ready to deliver an unforgettable driving experience. From business executives to VIP travelers, we cater to those who demand the very best.</p>
       </div>
-      <div class="our-story-image">
+      <div class="story-img reveal-right">
         <img src="https://framerusercontent.com/images/Paetb2wPdJwlT8RWJvsfhmONEQ.jpg" alt="Our story" loading="lazy" />
       </div>
     </div>
   </section>
 
   <!-- ===== MISSION & VISION ===== -->
-  <section class="mission-vision">
+  <section class="mv">
     <div class="container">
-      <div class="mv-image">
+      <div class="mv-img reveal-left">
         <img src="https://framerusercontent.com/images/eH6KHuTkgvUbEw4j76hS5OlcUr0.jpg" alt="Mission & Vision" loading="lazy" />
       </div>
-      <div class="mv-content">
+      <div class="mv-content reveal-right">
         <div class="mv-item">
-          <h3>Mission</h3>
+          <h3><span>✦</span> Mission</h3>
           <p>To provide effortless access to premium vehicles and accommodations, redefining the standard for luxury travel in Nigeria.</p>
         </div>
         <div class="mv-item">
-          <h3>Vision</h3>
+          <h3><span>✦</span> Vision</h3>
           <p>To become the most trusted luxury car rental and service apartment platform in Africa, known for excellence, transparency, and reliability.</p>
         </div>
       </div>
@@ -336,23 +519,23 @@
   <!-- ===== IMPACT ===== -->
   <section class="impact">
     <div class="container">
-      <h2 class="section-title">Our Impact in <strong>Numbers</strong></h2>
-      <p style="text-align:center;color:#96999c;margin:-32px 0 48px;font-size:16px;">A reflection of our commitment, growth, and customer trust over the years.</p>
+      <h2 class="section-title reveal">Our Impact in <strong>Numbers</strong></h2>
+      <p class="section-sub reveal">A reflection of our commitment, growth, and customer trust over the years.</p>
       <div class="impact-grid">
-        <div class="impact-card">
-          <p class="impact-number">3+</p>
+        <div class="impact-card reveal-scale">
+          <p class="impact-num">3+</p>
           <p class="impact-label">Years Experience</p>
         </div>
-        <div class="impact-card">
-          <p class="impact-number">50+</p>
+        <div class="impact-card reveal-scale">
+          <p class="impact-num">50+</p>
           <p class="impact-label">Luxury Vehicles</p>
         </div>
-        <div class="impact-card">
-          <p class="impact-number">98%</p>
+        <div class="impact-card reveal-scale">
+          <p class="impact-num">98%</p>
           <p class="impact-label">Customer Satisfaction</p>
         </div>
-        <div class="impact-card">
-          <p class="impact-number">24/7</p>
+        <div class="impact-card reveal-scale">
+          <p class="impact-num">24/7</p>
           <p class="impact-label">Support Availability</p>
         </div>
       </div>
@@ -362,9 +545,10 @@
   <!-- ===== JOURNEY ===== -->
   <section class="journey">
     <div class="container">
-      <div class="journey-content">
+      <div class="journey-text reveal-left">
         <h2>Our <strong>Journey</strong></h2>
-        <p style="font-size:15px;color:#555;margin:0 0 32px;line-height:1.7;">From a small premium fleet to a trusted luxury rental platform.</p>
+        <div class="gold-line" style="margin:0 0 20px"></div>
+        <p>From a small premium fleet to a trusted luxury rental platform.</p>
         <div class="journey-point">
           <div class="journey-dot"></div>
           <p>Carefully maintained luxury fleet & premium apartments</p>
@@ -378,7 +562,7 @@
           <p>Fast and easy WhatsApp booking</p>
         </div>
       </div>
-      <div class="journey-image">
+      <div class="journey-img reveal-right">
         <img src="https://framerusercontent.com/images/lqCBhJK5ZJDEhkBud2nija95RZM.jpg" alt="Our journey" loading="lazy" />
       </div>
     </div>
@@ -387,26 +571,26 @@
   <!-- ===== VALUES ===== -->
   <section class="values">
     <div class="container">
-      <h2 class="section-title">What <strong>Drives Us</strong></h2>
-      <p style="text-align:center;color:#666;margin:-32px 0 48px;font-size:16px;">The principles that shape every rental experience we deliver.</p>
+      <h2 class="section-title reveal">What <strong>Drives Us</strong></h2>
+      <p class="section-sub reveal">The principles that shape every rental experience we deliver.</p>
       <div class="values-grid">
-        <div class="value-card">
+        <div class="value-card reveal-scale">
           <div class="value-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0e13" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           </div>
           <h3>Transparent</h3>
           <p>We believe in clear pricing with no hidden charges. What you see is exactly what you pay.</p>
         </div>
-        <div class="value-card">
+        <div class="value-card reveal-scale">
           <div class="value-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0e13" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h3>Quality First</h3>
           <p>Every vehicle in our fleet is inspected, maintained, and ready for a premium driving experience.</p>
         </div>
-        <div class="value-card">
+        <div class="value-card reveal-scale">
           <div class="value-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0e13" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           </div>
           <h3>Customer First</h3>
           <p>From booking to return, we ensure smooth communication and reliable support.</p>
@@ -418,25 +602,25 @@
   <!-- ===== TEAM ===== -->
   <section class="team">
     <div class="container">
-      <h2 class="section-title">Meet Our <strong>Team</strong></h2>
-      <p style="text-align:center;color:#666;margin:-32px 0 48px;font-size:16px;">The people behind every exceptional experience.</p>
+      <h2 class="section-title reveal">Meet Our <strong>Team</strong></h2>
+      <p class="section-sub reveal">The people behind every exceptional experience.</p>
       <div class="team-grid">
-        <div class="team-card">
+        <div class="team-card reveal-scale">
           <img src="https://framerusercontent.com/images/iKC8QopEIKz9A7lByBPP5s0hKg.png" alt="Albert Flores" loading="lazy" />
           <h4>Albert Flores</h4>
           <p>Senior Marketing Executive</p>
         </div>
-        <div class="team-card">
+        <div class="team-card reveal-scale">
           <img src="https://framerusercontent.com/images/aw45qxf2DDeaYRlgYS0y2PuahEw.jpg" alt="Floyd Miles" loading="lazy" />
           <h4>Floyd Miles</h4>
           <p>Entrepreneur &amp; Car Enthusiast</p>
         </div>
-        <div class="team-card">
+        <div class="team-card reveal-scale">
           <img src="https://framerusercontent.com/images/RjY3Gqw7OxjiZe8X3oTdXPy5Dw.jpg" alt="Arlene McCoy" loading="lazy" />
           <h4>Arlene McCoy</h4>
           <p>Business Consultant</p>
         </div>
-        <div class="team-card">
+        <div class="team-card reveal-scale">
           <img src="https://framerusercontent.com/images/VgVWXtf3Djw9Y7wA3TIILL9G0c.jpg" alt="Robert Fox" loading="lazy" />
           <h4>Robert Fox</h4>
           <p>Luxury Travel Consultant</p>
@@ -448,26 +632,26 @@
   <!-- ===== TESTIMONIALS ===== -->
   <section class="testimonials">
     <div class="container">
-      <h2 class="section-title">Trusted by Clients <strong>Nationwide</strong></h2>
-      <p style="text-align:center;color:#666;margin:-32px 0 48px;font-size:16px;">Genuine feedback from customers who value quality and reliability.</p>
+      <h2 class="section-title reveal">Trusted by Clients <strong>Nationwide</strong></h2>
+      <p class="section-sub reveal">Genuine feedback from customers who value quality and reliability.</p>
       <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-rating">4.9</div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-rating">★★★★★ 4.9</div>
           <p class="testimonial-text">"I reserved my vehicle in just a few clicks and received confirmation instantly. The car was immaculate, and the service team was responsive throughout. A truly premium rental experience."</p>
           <p class="testimonial-name">Floyd Miles</p>
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-rating">4.9</div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-rating">★★★★★ 4.9</div>
           <p class="testimonial-text">"I secured my rental within minutes and appreciated the transparent pricing. The platform was easy to navigate, and the vehicle quality was outstanding. Highly recommended for luxury rentals."</p>
           <p class="testimonial-name">Albert Flores</p>
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-rating">4.9</div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-rating">★★★★★ 4.9</div>
           <p class="testimonial-text">"I rented my vehicle in minutes and received instant confirmation. The experience was smooth, reliable, and completely hassle-free, getting me on the road quickly. Excellent service overall!"</p>
           <p class="testimonial-name">Arlene McCoy</p>
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-rating">4.9</div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-rating">★★★★★ 4.9</div>
           <p class="testimonial-text">"From selecting the vehicle to final confirmation, the experience was smooth and transparent. The pricing clarity and vehicle quality built immediate trust. I'll definitely choose Eko Luxury Rides again."</p>
           <p class="testimonial-name">Eleanor Pena</p>
         </div>
@@ -478,60 +662,60 @@
   <!-- ===== FAQ ===== -->
   <section class="faq-section">
     <div class="container">
-      <h2 class="section-title">Popular <strong>Questions</strong></h2>
-      <p style="text-align:center;color:#666;margin:-32px 0 48px;font-size:16px;">Explore the questions we get asked the most</p>
+      <h2 class="section-title reveal">Popular <strong>Questions</strong></h2>
+      <p class="section-sub reveal">Explore the questions we get asked the most</p>
       <div class="faq-grid">
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-q" aria-expanded="false">
             <span>What are my extra costs?</span>
             <svg class="faq-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
-            <p>When you rent a car, the advertised daily rate is often just the starting point. Various additional costs, or "overheads," can significantly increase your final bill. It's crucial to be aware of these potential fees to budget accurately and avoid surprises.</p>
+          <div class="faq-a">
+            <p>When you rent a car, the advertised daily rate is often just the starting point. Various additional costs can significantly increase your final bill. It's crucial to be aware of these potential fees to budget accurately and avoid surprises.</p>
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-q" aria-expanded="false">
             <span>Can I rent a car with cryptocurrency?</span>
             <svg class="faq-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-a">
             <p>We currently accept bank transfers, debit/credit cards, and mobile payments. Cryptocurrency payments are not yet available, but we are exploring options for future integration.</p>
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-q" aria-expanded="false">
             <span>Do I need to pay a security deposit to rent a car?</span>
             <svg class="faq-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-a">
             <p>Yes, a refundable security deposit is required for all rentals. The deposit amount varies based on the vehicle category and will be fully returned upon inspection of the vehicle at return.</p>
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-q" aria-expanded="false">
             <span>Can I rent a car without a credit card?</span>
             <svg class="faq-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-a">
             <p>Absolutely. We accept bank transfers and mobile payments. A valid ID and driver's license are required to complete the rental agreement.</p>
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-q" aria-expanded="false">
             <span>How do I rent a car through Eko Luxury Rides?</span>
             <svg class="faq-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-a">
             <p>Browse our fleet, select your preferred vehicle, and contact us via WhatsApp or our contact page. We will confirm availability, provide a customized quote, and arrange delivery or pickup at your convenience.</p>
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-q" aria-expanded="false">
             <span>Do you offer airport pickup and drop-off?</span>
             <svg class="faq-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-a">
             <p>Yes, we provide airport transfer services to and from Murtala Muhammed International Airport (LOS). Your driver will meet you at the arrivals hall with a name board and assist with luggage.</p>
           </div>
         </div>
@@ -585,7 +769,6 @@
         menu.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
-
       function closeMenu() {
         open = false;
         toggle.classList.remove('active');
@@ -593,40 +776,46 @@
         menu.classList.remove('active');
         document.body.style.overflow = '';
       }
-
       if (toggle) {
         toggle.addEventListener('click', function() {
-          if (open) closeMenu();
-          else openMenu();
+          if (open) closeMenu(); else openMenu();
         });
       }
-
-      links.forEach(function(link) {
-        link.addEventListener('click', closeMenu);
-      });
-
+      links.forEach(function(l) { l.addEventListener('click', closeMenu); });
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && open) closeMenu();
       });
-
       window.addEventListener('resize', function() {
         if (window.innerWidth >= 1024 && open) closeMenu();
       });
     })();
 
-    var faqItems = document.querySelectorAll('.faq-question');
-    faqItems.forEach(function(btn) {
+    // FAQ
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var expanded = btn.getAttribute('aria-expanded') === 'true';
-        faqItems.forEach(function(other) {
-          other.setAttribute('aria-expanded', 'false');
-          other.nextElementSibling.classList.remove('open');
+        document.querySelectorAll('.faq-q').forEach(function(o) {
+          o.setAttribute('aria-expanded', 'false');
+          o.nextElementSibling.classList.remove('open');
         });
         if (!expanded) {
           btn.setAttribute('aria-expanded', 'true');
           btn.nextElementSibling.classList.add('open');
         }
       });
+    });
+
+    // Scroll reveal
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
+      observer.observe(el);
     });
   </script>
 </body>
