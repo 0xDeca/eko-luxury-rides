@@ -28,6 +28,11 @@
     .eko-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       padding: 12px 32px;
+      transform: translateY(0);
+      transition: transform 0.35s ease;
+    }
+    .eko-header.hidden {
+      transform: translateY(-100%);
     }
     .eko-header-inner {
       max-width: 1400px; margin: 0 auto;
@@ -35,7 +40,15 @@
     }
     .eko-logo { display: flex; align-items: center; text-decoration: none; z-index: 1001; flex-shrink: 0; }
     .eko-logo img { height: 72px; width: auto; display: block; }
-    .eko-nav { position: absolute; left: 50%; transform: translateX(-50%); }
+    .eko-nav {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 100px;
+      padding: 6px 24px;
+    }
     .eko-nav-list { display: flex; align-items: center; gap: 36px; list-style: none; margin: 0; padding: 0; }
     .eko-nav-list a {
       font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
@@ -571,6 +584,21 @@
       window.addEventListener('resize', function() {
         if (window.innerWidth >= 1024 && open) closeMenu();
       });
+    })();
+
+    // Scroll hide header
+    (function() {
+      var header = document.querySelector('.eko-header');
+      var lastScroll = 0;
+      window.addEventListener('scroll', function() {
+        var current = window.pageYOffset || document.documentElement.scrollTop;
+        if (current > 80 && current > lastScroll) {
+          header.classList.add('hidden');
+        } else {
+          header.classList.remove('hidden');
+        }
+        lastScroll = current;
+      }, { passive: true });
     })();
 
     var faqItems = document.querySelectorAll('.faq-question');
