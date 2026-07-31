@@ -39,29 +39,29 @@
     .eko-logo img { height: 100px; width: auto; display: block; }
     .eko-nav {
       position: absolute; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
+      background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.55));
       backdrop-filter: blur(40px) saturate(1.8);
       -webkit-backdrop-filter: blur(40px) saturate(1.8);
-      border: 1px solid rgba(0,0,0,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 100px;
       padding: 14px 24px;
       box-shadow:
-        0 12px 48px rgba(0,0,0,0.04),
-        0 2px 8px rgba(0,0,0,0.02),
-        inset 0 1px 0 rgba(255,255,255,0.6);
+        0 12px 48px rgba(0,0,0,0.25),
+        0 2px 8px rgba(0,0,0,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.15);
     }
     .eko-nav-list { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
     .eko-nav-list a {
       font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
-      color: rgba(0,0,0,0.65); text-decoration: none;
+      color: rgba(255,255,255,0.75); text-decoration: none;
       letter-spacing: 0.8px; text-transform: uppercase;
       padding: 12px 32px; border-radius: 100px;
       transition: all 0.35s ease;
       outline: none;
     }
-    .eko-nav-list a:hover { color: #000; background: rgba(0,0,0,0.04); }
-    .eko-nav-list a.active { color: #000; background: rgba(0,0,0,0.07); }
-    .eko-nav-list a:focus-visible { box-shadow: 0 0 0 2px rgba(0,0,0,0.3); }
+    .eko-nav-list a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .eko-nav-list a.active { color: #fff; background: rgba(255,255,255,0.14); }
+    .eko-nav-list a:focus-visible { box-shadow: 0 0 0 2px rgba(255,255,255,0.4); }
 
     .eko-hamburger {
       display: none; flex-direction: column; justify-content: center; align-items: center;
