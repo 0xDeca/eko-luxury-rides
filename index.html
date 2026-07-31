@@ -185,35 +185,6 @@
     0 2px 8px rgba(0,0,0,0.12),
     inset 0 1px 0 rgba(255,255,255,0.15);
 }
-.eko-nav-indicator {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 0;
-  border-radius: 100px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(14px) saturate(1.5);
-  -webkit-backdrop-filter: blur(14px) saturate(1.5);
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow:
-    0 10px 28px rgba(0,0,0,0.2),
-    inset 0 1px 0 rgba(255,255,255,0.25),
-    inset 0 -1px 0 rgba(255,255,255,0.05);
-  opacity: 0;
-  pointer-events: none;
-  will-change: transform, opacity;
-  transition:
-    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.22s ease;
-}
-.eko-nav-indicator.visible {
-  opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .eko-nav-indicator {
-    transition: none;
-  }
-}
 .eko-nav-list {
   display: flex;
   align-items: center;
@@ -221,7 +192,6 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  position: relative;
 }
 
 .eko-nav-list a {
@@ -233,11 +203,35 @@
   letter-spacing: 0.8px;
   text-transform: uppercase;
   padding: 12px 32px;
-  border-radius: 100px;
   transition: color 0.3s ease;
   outline: none;
   position: relative;
-  z-index: 1;
+}
+.eko-nav-list a::after {
+  content: '';
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+.eko-nav-list a:hover::after,
+.eko-nav-list a.active::after {
+  transform: scaleX(1);
+}
+.eko-nav-list a:hover {
+  color: #fff;
+}
+.eko-nav-list a.active {
+  color: #fff;
+}
+.eko-nav-list a:focus-visible {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
 }
 .eko-nav-list a:hover {
   color: #fff;
@@ -668,7 +662,6 @@
       <img src="logo.png" alt="Eko Luxury Rides" />
     </a>
     <nav class="eko-nav" aria-label="Main navigation">
-      <div class="eko-nav-indicator" aria-hidden="true"></div>
       <ul class="eko-nav-list">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -879,43 +872,6 @@
       }
       lastScroll = current;
     }, { passive: true });
-  })();
-
-  // Liquid glass nav indicator
-  (function() {
-    var nav = document.querySelector('.eko-nav');
-    if (!nav) return;
-    var links = nav.querySelectorAll('.eko-nav-list a');
-    var indicator = nav.querySelector('.eko-nav-indicator');
-    var active = nav.querySelector('.eko-nav-list a.active');
-    if (!indicator) return;
-
-    function moveTo(link) {
-      var nRect = nav.getBoundingClientRect();
-      var lRect = link.getBoundingClientRect();
-      indicator.style.width = lRect.width + 'px';
-      indicator.style.height = (lRect.height + 12) + 'px';
-      indicator.style.transform = 'translate3d(' + (lRect.left - nRect.left) + 'px, -50%, 0)';
-      indicator.classList.add('visible');
-    }
-
-    links.forEach(function(link) {
-      link.addEventListener('mouseenter', function() { moveTo(link); });
-      link.addEventListener('focus', function() { moveTo(link); });
-      link.addEventListener('blur', function() {
-        if (active) moveTo(active);
-        else indicator.classList.remove('visible');
-      });
-    });
-
-    nav.addEventListener('mouseleave', function() {
-      if (active) moveTo(active);
-      else indicator.classList.remove('visible');
-    });
-
-    if (active) moveTo(active);
-    window.addEventListener('resize', function() { if (active) moveTo(active); });
-    window.addEventListener('load', function() { if (active) moveTo(active); });
   })();
 
   // FAQ accordion
